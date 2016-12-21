@@ -1,3 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
+  background-color: #041F37;
+}
+
+.game {
+  width: 100vw;
+  height: 100vh;
+  padding: 2em;
+  background-color: #041F37;
+}
+
+.grid {
+  width: 100%;
+  height: 100%;
   background-color: #2A4E6E;
 }
