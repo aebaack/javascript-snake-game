@@ -10,7 +10,18 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 2em;
+  padding-bottom: 3em;
   background-color: #041F37;
+}
+
+.game-title {
+  margin: 0;
+  position: fixed;
+  bottom: 0.25em;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 1.75em;
+  color: white;
 }
 
 .grid {
