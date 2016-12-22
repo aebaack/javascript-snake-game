@@ -9,7 +9,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const maxCol = getMaxColumn();
 
   let currentUserSquare = '1_1';
-  let velocity = [1, 1];
+  let velocity = [0, 0];
+
+  document.addEventListener('keydown', (event) => {
+    velocity = [0, 0];
+    switch(event.keyCode) {
+      case 37: // Left
+        velocity[0] = -1;
+        break;
+      case 38: // Up
+        velocity[1] = -1;
+        break;
+      case 39: // Right
+        velocity[0] = 1;
+        break;
+      case 40: // Down
+        velocity[1] = 1;
+        break;
+    }
+  });
+
   const gameLoop = setInterval(() => {
     let position = currentUserSquare.split('_');
     let newRow = parseInt(position[0]) + velocity[1];
