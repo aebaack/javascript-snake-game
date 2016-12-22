@@ -25,6 +25,7 @@ body {
 }
 
 .grid {
+  height: 100%;
   background-color: #2A4E6E;
 }
 

@@ -11,8 +11,10 @@ function createGrid() {
 
   const numCols = Math.floor(grid.offsetWidth / squareDimensions);
   grid.style.width = `${numCols * squareDimensions}px`;
+  const numRows = Math.floor(grid.offsetHeight / squareDimensions);
+  grid.style.height = `${numRows * squareDimensions}px`;
 
-  while (window.innerHeight - 60 > grid.offsetHeight + parseInt(squareDimensions)) {
+  for (let i = 0; i < numRows; i++) {
     let row = createRow(numCols);
     grid.appendChild(row);
   }
