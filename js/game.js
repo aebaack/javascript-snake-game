@@ -26,6 +26,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
+function getMaxRow() {
+  const rows = document.getElementsByClassName('row');
+  return rows.length - 1;
+}
+
+function getMaxColumn() {
+  const row = document.getElementsByClassName('row')[0];
+  const lastCol = row.children[row.children.length - 1];
+
+  return parseInt(lastCol.id.split('_')[1]);
+}
+
 function createGrid() {
   let grid = document.getElementById('grid-container');
 
@@ -53,8 +65,6 @@ function createRow(numCols, currentRow) {
 
 function createColumns(row, numCols, currentRow) {
   for (let i = 0; i < numCols; i++) {
-    maxCol = i;
-
     let newCol = document.createElement('div');
 
     newCol.className = 'col';
