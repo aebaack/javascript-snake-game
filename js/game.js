@@ -5,9 +5,24 @@ const squareDimensions = '23';
 document.addEventListener('DOMContentLoaded', (event) => {
   createGrid();
 
+  let currentUserSquare = '1_1';
+  let velocity = [1, 1];
   const gameLoop = setInterval(() => {
-    clearInterval(gameLoop);
-  }, 1000);
+    let position = currentUserSquare.split('_');
+    let newRow = parseInt(position[0]) + velocity[1];
+    let newCol = parseInt(position[1]) + velocity[0];
+
+    if (newRow < 0 || newRow > 15) {
+      clearInterval(gameLoop);
+    } else if (newCol < 0 || newCol > 15) {
+      clearInterval(gameLoop);
+    } else {
+      document.getElementById(currentUserSquare).className = 'col';
+
+      currentUserSquare = newRow + '_' + newCol;
+      document.getElementById(currentUserSquare).className = 'col snake';
+    }
+  }, 300);
 
 });
 
@@ -38,6 +53,8 @@ function createRow(numCols, currentRow) {
 
 function createColumns(row, numCols, currentRow) {
   for (let i = 0; i < numCols; i++) {
+    maxCol = i;
+
     let newCol = document.createElement('div');
 
     newCol.className = 'col';
