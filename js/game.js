@@ -4,7 +4,11 @@ const squareDimensions = '23';
 
 document.addEventListener('DOMContentLoaded', (event) => {
   createGrid();
-  //gameLoop();
+
+  const gameLoop = setInterval(() => {
+    clearInterval(gameLoop);
+  }, 1000);
+
 });
 
 function createGrid() {
@@ -44,9 +48,4 @@ function createColumns(row, numCols, currentRow) {
 
     row.appendChild(newCol);
   }
-}
-
-function gameLoop() {
-  console.log('this ran');
-  setTimeout(gameLoop, 1000);
 }
