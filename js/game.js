@@ -12,20 +12,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   let velocity = [0, 0];
 
   document.addEventListener('keydown', (event) => {
-    velocity = [0, 0];
-    switch(event.keyCode) {
-      case 37: // Left
-        velocity[0] = -1;
-        break;
-      case 38: // Up
-        velocity[1] = -1;
-        break;
-      case 39: // Right
-        velocity[0] = 1;
-        break;
-      case 40: // Down
-        velocity[1] = 1;
-        break;
+    const arrowKeyCodes = [37, 38, 39, 40];
+    if (arrowKeyCodes.includes(event.keyCode)) {
+      velocity = [0, 0];
+      switch(event.keyCode) {
+        case 37: // Left
+          velocity[0] = -1;
+          break;
+        case 38: // Up
+          velocity[1] = -1;
+          break;
+        case 39: // Right
+          velocity[0] = 1;
+          break;
+        case 40: // Down
+          velocity[1] = 1;
+          break;
+      }
     }
   });
 
@@ -44,7 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       currentUserSquare = newRow + '_' + newCol;
       document.getElementById(currentUserSquare).className = 'col snake';
     }
-  }, 300);
+  }, 50);
 
 });
 
