@@ -9,9 +9,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const maxRow = getMaxRow(); // Number of rows
   const maxCol = getMaxColumn(); // Number of columns
 
-  // Starting position and velocity
-  let currentUserSquare = '1_1'; // Starting square in the grid
+  // Starting user position and velocity
+  let currentUserSquare = '1_1'; // Starting user square in the grid
   let velocity = [0, 0]; // Starting velocity
+
+  // Starting food position
+  let currentFoodPosition = generateFoodSquare(maxRow, maxCol);
+  document.getElementById(currentFoodPosition).className = 'col food';
 
   // Arrow key movement
   document.addEventListener('keydown', (event) => {
@@ -115,4 +119,11 @@ function createColumns(row, numCols, currentRow) {
 
     row.appendChild(newCol);
   }
+}
+
+function generateFoodSquare(maxRow, maxCol, userSquaresArr) {
+  let row = Math.floor(Math.random() * (maxRow + 1))
+  let col = Math.floor(Math.random() * (maxCol + 1))
+
+  return `${row}_${col}`;
 }
