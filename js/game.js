@@ -9,9 +9,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const maxRow = getMaxRow(); // Number of rows
   const maxCol = getMaxColumn(); // Number of columns
 
-  // Starting user position and velocity
+  // Starting user position, velocity, and length
   let currentUserSquare = '1_1'; // Starting user square in the grid
   let velocity = [0, 0]; // Starting velocity
+  let length = [currentUserSquare];
 
   // Starting food position
   let currentFoodPosition = generateFoodSquare(maxRow, maxCol);
@@ -55,8 +56,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
       clearInterval(gameLoop); // End Game
     } else {
       document.getElementById(currentUserSquare).className = 'col'; // Reset previous player square to be back to the normal color
+      currentUserSquare = newRow + '_' + newCol; // Determine id of new position
 
-      currentUserSquare = newRow + '_' + newCol; // Determine id of current position
+      // User has moved over food
+      if (currentUserSquare === currentFoodPosition) {
+        const alias = currentUserSquare;
+        length.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
+      }
+
       document.getElementById(currentUserSquare).className = 'col snake'; // Change the current square to be a player square
     }
   }, 50);
