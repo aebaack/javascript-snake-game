@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const maxCol = getMaxColumn(); // Number of columns
 
   // Starting user position, velocity, and length
-  let currentUserSquare = '1_1'; // Starting user square in the grid
+  let snakeSquares = ['1_1']; // Starting user square in the grid
   let velocity = [0, 0]; // Starting velocity
-  let length = [currentUserSquare];
+  //let length = [currentUserSquare];
 
   // Starting food position
   let currentFoodPosition = generateFoodSquare(maxRow, maxCol);
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   // Logic for the game loop
   const gameLoop = setInterval(() => {
     // Determine new positioning
-    let position = currentUserSquare.split('_'); // Determine current position
+    let position = snakeSquares[0].split('_'); // Determine current position
     let newRow = parseInt(position[0]) + velocity[1]; // Change current row
     let newCol = parseInt(position[1]) + velocity[0]; // Change current column
 
@@ -55,16 +55,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else if (newCol < 0 || newCol > maxCol) { // Out of bounds
       clearInterval(gameLoop); // End Game
     } else {
-      document.getElementById(currentUserSquare).className = 'col'; // Reset previous player square to be back to the normal color
-      currentUserSquare = newRow + '_' + newCol; // Determine id of new position
+
+      //document.getElementById(snakeSquares[0]).className = 'col'; // Reset previous player square to be back to the normal color
+
+      // Push changes through array
+      const oldSnakeSquares = snakeSquares.slice();
+      updateSnakeSquares(snakeSquares);
+      const lastOldSnakeSquare = oldSnakeSquares[oldSnakeSquares.length - 1];
+      if (!snakeSquares.includes(lastOldSnakeSquare) || snakeSquares.length === 1) {
+        document.getElementById(lastOldSnakeSquare).className = 'col';
+      }
+
+      let currentUserSquare = newRow + '_' + newCol; // Determine id of new position
+      snakeSquares[0] = currentUserSquare;
 
       // User has moved over food
       if (currentUserSquare === currentFoodPosition) {
         const alias = currentUserSquare;
-        length.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
+        snakeSquares.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
+        currentFoodPosition = generateFoodSquare(maxRow, maxCol);
+        document.getElementById(currentFoodPosition).className = 'col food';
       }
 
-      document.getElementById(currentUserSquare).className = 'col snake'; // Change the current square to be a player square
+      drawSnake(snakeSquares, oldSnakeSquares);
+
+      //document.getElementById(currentUserSquare).className = 'col snake'; // Change the current square to be a player square
     }
   }, 50);
 
@@ -125,6 +140,18 @@ function createColumns(row, numCols, currentRow) {
     newCol.style.height = '100%';
 
     row.appendChild(newCol);
+  }
+}
+
+function drawSnake(snakeSquares) {
+  snakeSquares.forEach((snakeSquare) => {
+    document.getElementById(snakeSquare).className = 'col snake';
+  });
+}
+
+function updateSnakeSquares(snakeSquares) {
+  for (let i = snakeSquares.length - 1; i > 0; i--) {
+    snakeSquares[i] = snakeSquares [i - 1];
   }
 }
 
