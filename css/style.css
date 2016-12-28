@@ -42,11 +42,12 @@ body {
 }
 
 .snake {
-  background-color: yellow;
+  background-color: #FFFDAA;
+  border: 1px solid #2A4E6E;
 }
 
 .food {
-  background-color: red;
+  background-color: #E50000;
 }
 
 .game-over {
@@ -54,5 +55,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: white;
   visibility: hidden;
 }

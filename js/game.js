@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Change the current player squares or end the game
     if (newRow < 0 || newRow > maxRow) { // Out of bounds
       clearInterval(gameLoop); // End game
-      displayGameLoseText();
+      gameLost(snakeSquares);
     } else if (newCol < 0 || newCol > maxCol) { // Out of bounds
       clearInterval(gameLoop); // End Game
-      displayGameLoseText();
+      gameLost(snakeSquares);
     } else {
 
       // Push changes through array
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       if (snakeSquares.includes(currentUserSquare) && snakeSquares.length > 1) {
         clearInterval(gameLoop);
-        displayGameLoseText();
+        gameLost(snakeSquares);
       }
 
       snakeSquares[0] = currentUserSquare;
@@ -187,6 +187,7 @@ function generateFoodSquare(maxRow, maxCol, snakeSquares) {
   return foodSquare;
 }
 
-function displayGameLoseText() {
+function gameLost(snakeSquares) {
+  document.getElementById(snakeSquares[0]).style.backgroundColor = '#979280';
   document.getElementById('game-over').style.visibility = 'visible';
 }
