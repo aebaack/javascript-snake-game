@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   //let length = [currentUserSquare];
 
   // Starting food position
-  let currentFoodPosition = generateFoodSquare(maxRow, maxCol);
+  let currentFoodPosition = generateFoodSquare(maxRow, maxCol, snakeSquares);
   document.getElementById(currentFoodPosition).className = 'col food';
 
   // Arrow key movement
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       if (currentUserSquare === currentFoodPosition) {
         const alias = currentUserSquare;
         snakeSquares.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
-        currentFoodPosition = generateFoodSquare(maxRow, maxCol);
+        currentFoodPosition = generateFoodSquare(maxRow, maxCol, snakeSquares);
         document.getElementById(currentFoodPosition).className = 'col food';
       }
 
@@ -155,9 +155,14 @@ function updateSnakeSquares(snakeSquares) {
   }
 }
 
-function generateFoodSquare(maxRow, maxCol, userSquaresArr) {
-  let row = Math.floor(Math.random() * (maxRow + 1))
-  let col = Math.floor(Math.random() * (maxCol + 1))
-
-  return `${row}_${col}`;
+function generateFoodSquare(maxRow, maxCol, snakeSquares) {
+  let foodSquare;
+  console.log(snakeSquares);
+  do {
+    let row = Math.floor(Math.random() * (maxRow + 1));
+    let col = Math.floor(Math.random() * (maxCol + 1));
+    foodSquare = row + '_' + col;
+  }
+  while(snakeSquares.includes(foodSquare));
+  return foodSquare;
 }
