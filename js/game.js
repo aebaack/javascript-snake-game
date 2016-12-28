@@ -93,6 +93,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         snakeSquares.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
         currentFoodPosition = generateFoodSquare(maxRow, maxCol, snakeSquares);
         document.getElementById(currentFoodPosition).className = 'col food';
+
+        // Update score
+        document.getElementById('score').innerText = snakeSquares.length;
       }
 
       drawSnake(snakeSquares, oldSnakeSquares);

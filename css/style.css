@@ -24,6 +24,14 @@ body {
   color: white;
 }
 
+.game-score {
+  position: fixed;
+  bottom: 4px;
+  right: 20px;
+  font-size: 14px;
+  color: white;
+}
+
 .grid {
   height: 100%;
   background-color: #2A4E6E;
