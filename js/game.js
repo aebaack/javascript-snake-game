@@ -27,21 +27,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
       //velocity = [0, 0]; // Reset velocity so player can only go one direction
       switch(keyPressed) {
         case 37: // Left
+          // Ensure snake is not turning in on itself and change velocity
           if (velocity[0] !== 1 || snakeSquares.length === 1) {
             velocity = [-1, 0];
           }
           break;
         case 38: // Up
+          // Ensure snake is not turning in on itself and change velocity
           if (velocity[1] !== 1 || snakeSquares.length === 1) {
             velocity = [0, -1];
           }
           break;
         case 39: // Right
+          // Ensure snake is not turning in on itself and change velocity
           if (velocity[0] !== -1 || snakeSquares.length === 1) {
             velocity = [1, 0];
           }
           break;
         case 40: // Down
+          // Ensure snake is not turning in on itself and change velocity
           if (velocity[1] !== -1 || snakeSquares.length === 1) {
             velocity = [0, 1];
           }
@@ -64,8 +68,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       clearInterval(gameLoop); // End Game
     } else {
 
-      //document.getElementById(snakeSquares[0]).className = 'col'; // Reset previous player square to be back to the normal color
-
       // Push changes through array
       const oldSnakeSquares = snakeSquares.slice();
       updateSnakeSquares(snakeSquares);
@@ -75,6 +77,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
 
       let currentUserSquare = newRow + '_' + newCol; // Determine id of new position
+
+      if (snakeSquares.includes(currentUserSquare) && snakeSquares.length > 1) {
+        clearInterval(gameLoop);
+      }
+
       snakeSquares[0] = currentUserSquare;
 
       // User has moved over food
@@ -165,7 +172,6 @@ function updateSnakeSquares(snakeSquares) {
 
 function generateFoodSquare(maxRow, maxCol, snakeSquares) {
   let foodSquare;
-  console.log(snakeSquares);
   do {
     let row = Math.floor(Math.random() * (maxRow + 1));
     let col = Math.floor(Math.random() * (maxCol + 1));
