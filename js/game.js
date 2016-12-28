@@ -24,19 +24,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const keyPressed = event.keyCode; // Key player pressed
 
     if (arrowKeyCodes.includes(keyPressed)) { // Velocity only resets for arrows
-      velocity = [0, 0]; // Reset velocity so player can only go one direction
+      //velocity = [0, 0]; // Reset velocity so player can only go one direction
       switch(keyPressed) {
         case 37: // Left
-          velocity[0] = -1;
+          if (velocity[0] !== 1 || snakeSquares.length === 1) {
+            velocity = [-1, 0];
+          }
           break;
         case 38: // Up
-          velocity[1] = -1;
+          if (velocity[1] !== 1 || snakeSquares.length === 1) {
+            velocity = [0, -1];
+          }
           break;
         case 39: // Right
-          velocity[0] = 1;
+          if (velocity[0] !== -1 || snakeSquares.length === 1) {
+            velocity = [1, 0];
+          }
           break;
         case 40: // Down
-          velocity[1] = 1;
+          if (velocity[1] !== -1 || snakeSquares.length === 1) {
+            velocity = [0, 1];
+          }
           break;
       }
     }
@@ -81,7 +89,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       //document.getElementById(currentUserSquare).className = 'col snake'; // Change the current square to be a player square
     }
-  }, 50);
+  }, 65);
 
 });
 
