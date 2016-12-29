@@ -1,10 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 * {
   box-sizing: border-box;
 }
 
 body {
   background-color: #041F37;
+  font-family: 'Roboto';
 }
+
+/* ----- GAME WINDOW AND INFORMATION */
 
 .game {
   width: 100vw;
@@ -15,11 +20,11 @@ body {
 }
 
 .game-title {
-  margin: 0;
   position: fixed;
   bottom: 4px;
   left: 50%;
   transform: translate(-50%);
+  margin-bottom: 4px;
   font-size: 24px;
   color: white;
 }
@@ -31,6 +36,8 @@ body {
   font-size: 14px;
   color: white;
 }
+
+/* ----- GAME GRID ----- */
 
 .grid {
   height: 100%;
@@ -50,11 +57,37 @@ body {
   background-color: #E50000;
 }
 
+/* ----- GAME OVER BOX ----- */
+
 .game-over {
+  visibility: hidden;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 225px;
+  height: 150px;
+  background-color: #5D626E;
   color: white;
-  visibility: hidden;
+  text-align: center;
+  border-radius: 15px;
+  border: 2px solid #25282D;
+}
+
+button {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.game-over h1 {
+  font-size: 30px;
+}
+
+.game-over button {
+  padding: 15px 30px;
+  background-color: white;
+  font-size: 24px;
+  border: 2px solid black;
 }
