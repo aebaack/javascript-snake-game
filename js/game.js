@@ -9,10 +9,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const maxRow = getMaxRow(); // Number of rows
   const maxCol = getMaxColumn(); // Number of columns
 
-  // Starting user position, velocity, and length
+  // Starting user position and velocity
   let snakeSquares = ['1_1']; // Starting user square in the grid
   let velocity = [0, 0]; // Starting velocity
-  //let length = [currentUserSquare];
+
+  let currentFrameVelocity = velocity.splice(); // Holds the frame's velocity, since velocity can be changed multiple times between frames
 
   // Starting food position
   let currentFoodPosition = generateFoodSquare(maxRow, maxCol, snakeSquares);
@@ -28,25 +29,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
       switch(keyPressed) {
         case 37: // Left
           // Ensure snake is not turning in on itself and change velocity
-          if (velocity[0] !== 1 || snakeSquares.length === 1) {
+          if (currentFrameVelocity[0] !== 1 || snakeSquares.length === 1) {
             velocity = [-1, 0];
           }
           break;
         case 38: // Up
           // Ensure snake is not turning in on itself and change velocity
-          if (velocity[1] !== 1 || snakeSquares.length === 1) {
+          if (currentFrameVelocity[1] !== 1 || snakeSquares.length === 1) {
             velocity = [0, -1];
           }
           break;
         case 39: // Right
           // Ensure snake is not turning in on itself and change velocity
-          if (velocity[0] !== -1 || snakeSquares.length === 1) {
+          if (currentFrameVelocity[0] !== -1 || snakeSquares.length === 1) {
             velocity = [1, 0];
           }
           break;
         case 40: // Down
           // Ensure snake is not turning in on itself and change velocity
-          if (velocity[1] !== -1 || snakeSquares.length === 1) {
+          if (currentFrameVelocity[1] !== -1 || snakeSquares.length === 1) {
             velocity = [0, 1];
           }
           break;
@@ -60,6 +61,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let position = snakeSquares[0].split('_'); // Determine current position
     let newRow = parseInt(position[0]) + velocity[1]; // Change current row
     let newCol = parseInt(position[1]) + velocity[0]; // Change current column
+
+    // Set the current frame's velocity to equal the velocity set through arrow keys
+    currentFrameVelocity = velocity.slice();
 
     // Change the current player squares or end the game
     if (newRow < 0 || newRow > maxRow) { // Out of bounds
