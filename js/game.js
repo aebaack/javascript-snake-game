@@ -1,6 +1,9 @@
 'use strict';
 
-const squareDimensions = '23';
+// Configuration
+const squareDimensions = '23'; // Dimension in pixels of each square on the grid
+const frameInterval = 65; // Interval in milliseconds between each frame
+const lengthPerFood = 3; // Amount of length added with each piece of food eaten
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // Generate the dynamic game grid and determine number of rows and columns
@@ -75,17 +78,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } else {
 
       // Push changes through array
-      const oldSnakeSquares = snakeSquares.slice();
-      updateSnakeSquares(snakeSquares);
-      const lastOldSnakeSquare = oldSnakeSquares[oldSnakeSquares.length - 1];
+      const oldSnakeSquares = snakeSquares.slice(); // Snake squares on previous frame
+      updateSnakeSquares(snakeSquares); // Update snake position to new frame
+      const lastOldSnakeSquare = oldSnakeSquares[oldSnakeSquares.length - 1]; // Grab the last snake square in the array oldSnakeSquares
+
+      // If the snake's current position (snakeSquares) does not include the snake's previous last position (lastOldSnakeSquare), then that last square can be colored like a normal col
+      // This ensures that when the snake eats food and gains five squares at its current position, those squares do not end up being colored like a normal col square even though the snake is still in the square
       if (!snakeSquares.includes(lastOldSnakeSquare) || snakeSquares.length === 1) {
         document.getElementById(lastOldSnakeSquare).className = 'col';
       }
 
       let currentUserSquare = newRow + '_' + newCol; // Determine id of new position
 
+      // Snake has run in to itself
       if (snakeSquares.includes(currentUserSquare) && snakeSquares.length > 1) {
-        clearInterval(gameLoop);
+        clearInterval(gameLoop); // End game
         gameLost(snakeSquares);
       }
 
@@ -93,8 +100,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       // User has moved over food
       if (currentUserSquare === currentFoodPosition) {
-        const alias = currentUserSquare;
-        snakeSquares.push(...[alias, alias, alias, alias, alias]); // Add 5 more squares to the length
+        // Add length to the snake
+        addLengthToSnake(snakeSquares, currentUserSquare, lengthPerFood);
+
+        // Create a new food square
         currentFoodPosition = generateFoodSquare(maxRow, maxCol, snakeSquares);
         document.getElementById(currentFoodPosition).className = 'col food';
 
@@ -103,10 +112,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
 
       drawSnake(snakeSquares, oldSnakeSquares);
-
-      //document.getElementById(currentUserSquare).className = 'col snake'; // Change the current square to be a player square
     }
-  }, 65);
+  }, frameInterval);
 
 });
 
@@ -169,18 +176,33 @@ function createColumns(row, numCols, currentRow) {
 }
 
 function drawSnake(snakeSquares) {
+  // Traverse an array of square ids and add the class snake to them
   snakeSquares.forEach((snakeSquare) => {
     document.getElementById(snakeSquare).className = 'col snake';
   });
 }
 
 function updateSnakeSquares(snakeSquares) {
+  // Move every value in snakeSquares to the next position in the array
   for (let i = snakeSquares.length - 1; i > 0; i--) {
-    snakeSquares[i] = snakeSquares [i - 1];
+    snakeSquares[i] = snakeSquares[i - 1];
   }
 }
 
+function addLengthToSnake(snakeSquares, currentUserSquare, amountToAdd) {
+  // Add more snake squares to the snakeSquares array
+  // amountToAdd squares will be added at currentUserSquare
+  let newSnakeSquares = [];
+  while (amountToAdd > 0) {
+    newSnakeSquares.push(currentUserSquare);
+    amountToAdd--;
+  }
+
+  snakeSquares.push(...newSnakeSquares);
+}
+
 function generateFoodSquare(maxRow, maxCol, snakeSquares) {
+  // Return the position of a new food square
   let foodSquare;
   do {
     let row = Math.floor(Math.random() * (maxRow + 1));
@@ -192,6 +214,7 @@ function generateFoodSquare(maxRow, maxCol, snakeSquares) {
 }
 
 function gameLost(snakeSquares) {
+  // Display game over text and color the head of the snake
   document.getElementById(snakeSquares[0]).style.backgroundColor = '#979280';
   document.getElementById('game-over').style.visibility = 'visible';
 }
