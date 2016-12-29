@@ -3,9 +3,14 @@
 // Configuration
 const squareDimensions = '23'; // Dimension in pixels of each square on the grid
 const frameInterval = 65; // Interval in milliseconds between each frame
-const lengthPerFood = 3; // Amount of length added with each piece of food eaten
+const lengthPerFood = 5; // Amount of length added with each piece of food eaten
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', snakeGame);
+
+function snakeGame() {
+  // Clear a previous grid if the game has been restarted
+  clearGrid();
+
   // Generate the dynamic game grid and determine number of rows and columns
   createGrid();
 
@@ -96,7 +101,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         gameLost(snakeSquares);
       }
 
-      snakeSquares[0] = currentUserSquare;
+      snakeSquares[0] = currentUserSquare; // Update the snake square to include the newest square
 
       // User has moved over food
       if (currentUserSquare === currentFoodPosition) {
@@ -111,11 +116,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('score').innerText = snakeSquares.length;
       }
 
-      drawSnake(snakeSquares, oldSnakeSquares);
+      drawSnake(snakeSquares, oldSnakeSquares); // Draw the snake
     }
   }, frameInterval);
-
-});
+}
 
 // ----- CREATING THE GRID -----
 
@@ -177,6 +181,19 @@ function getMaxColumn() {
   const lastCol = row.children[row.children.length - 1];
 
   return parseInt(lastCol.id.split('_')[1]);
+}
+
+// ----- OTHER GRID FUNCTIONS -----
+
+function clearGrid() {
+  // Delete a previous grid if the game has already been played
+  let grid = document.getElementById('grid-container');
+  while (grid.hasChildNodes()) {
+    grid.removeChild(grid.lastChild);
+  }
+
+  // Hide the game over text if the game has been restarted
+  document.getElementById('game-over').style.visibility = 'hidden';
 }
 
 // ----- DRAWING AND MODIFYING THE SNAKE
