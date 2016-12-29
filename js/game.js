@@ -117,19 +117,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-function getMaxRow() {
-  // Determine the max row id possible
-  const rows = document.getElementsByClassName('row');
-  return rows.length - 1;
-}
-
-function getMaxColumn() {
-  // Determine the max column id possible
-  const row = document.getElementsByClassName('row')[0];
-  const lastCol = row.children[row.children.length - 1];
-
-  return parseInt(lastCol.id.split('_')[1]);
-}
+// ----- CREATING THE GRID -----
 
 function createGrid() {
   // Generate the game grid
@@ -175,6 +163,24 @@ function createColumns(row, numCols, currentRow) {
   }
 }
 
+// ----- DETERMINING SIZE OF GRID -----
+
+function getMaxRow() {
+  // Determine the max row id possible
+  const rows = document.getElementsByClassName('row');
+  return rows.length - 1;
+}
+
+function getMaxColumn() {
+  // Determine the max column id possible
+  const row = document.getElementsByClassName('row')[0];
+  const lastCol = row.children[row.children.length - 1];
+
+  return parseInt(lastCol.id.split('_')[1]);
+}
+
+// ----- DRAWING AND MODIFYING THE SNAKE
+
 function drawSnake(snakeSquares) {
   // Traverse an array of square ids and add the class snake to them
   snakeSquares.forEach((snakeSquare) => {
@@ -201,6 +207,8 @@ function addLengthToSnake(snakeSquares, currentUserSquare, amountToAdd) {
   snakeSquares.push(...newSnakeSquares);
 }
 
+// ----- CREATING FOOD SQUARES -----
+
 function generateFoodSquare(maxRow, maxCol, snakeSquares) {
   // Return the position of a new food square
   let foodSquare;
@@ -212,6 +220,8 @@ function generateFoodSquare(maxRow, maxCol, snakeSquares) {
   while(snakeSquares.includes(foodSquare));
   return foodSquare;
 }
+
+// ----- GAME FUNCTIONALITY -----
 
 function gameLost(snakeSquares) {
   // Display game over text and color the head of the snake
