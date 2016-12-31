@@ -124,13 +124,18 @@ function snakeGame() {
 // ----- CREATING THE GRID -----
 
 function createGrid() {
-  // Generate the game grid
+  // Generate the game grid and grab dimensions
   let grid = document.getElementById('grid-container'); // Grab grid div
+  const gridWidth = document.documentElement.clientWidth - 40;
+  const gridHeight = document.documentElement.clientHeight - 60;
+  // I know, hardcoding pixels is bad...
 
-  // Determine the number of rows and columns that will fit on the grid
-  const numCols = Math.floor(grid.offsetWidth / squareDimensions);
+  // Determine the number of columns that will fit on the grid
+  const numCols = Math.floor(gridWidth / squareDimensions);
   grid.style.width = `${numCols * squareDimensions}px`;
-  const numRows = Math.floor(grid.offsetHeight / squareDimensions);
+
+  // Determine the number of rows that will fit on the grid
+  const numRows = Math.floor(gridHeight / squareDimensions);
   grid.style.height = `${numRows * squareDimensions}px`;
 
   // Add rows (which include columns) to the grid
