@@ -201,7 +201,7 @@ function clearGrid() {
   document.getElementById('game-over').style.visibility = 'hidden';
 }
 
-// ----- DRAWING AND MODIFYING THE SNAKE
+// ----- DRAWING AND MODIFYING THE SNAKE -----
 
 function drawSnake(snakeSquares) {
   // Traverse an array of square ids and add the class snake to them
