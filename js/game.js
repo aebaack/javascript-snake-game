@@ -32,6 +32,8 @@ function snakeGame() {
     const arrowKeyCodes = [37, 38, 39, 40]; // Arrow keys
     const keyPressed = event.keyCode; // Key player pressed
 
+    hideInstructions(); // Hide game instructions if they are visible
+
     if (arrowKeyCodes.includes(keyPressed)) { // Velocity only resets for arrows
       //velocity = [0, 0]; // Reset velocity so player can only go one direction
       switch(keyPressed) {
@@ -249,4 +251,8 @@ function gameLost(snakeSquares) {
   // Display game over text and color the head of the snake
   document.getElementById(snakeSquares[0]).style.backgroundColor = '#979280';
   document.getElementById('game-over').style.visibility = 'visible';
+}
+
+function hideInstructions() {
+  document.getElementById('instructions').style.visibility = 'hidden';
 }
